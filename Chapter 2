@@ -1,0 +1,291 @@
+/*                                                   //USER DEFINED FUNCTIONS
+
+#include<iostream>
+
+int getValue()
+{
+	int input;
+	
+	std::cout << "Enter a number: ";
+
+	std::cin >> input;
+	
+	return input;	//when getValue is called, input is returned.
+}
+
+int main()
+{
+	int num{ getValue() };  //main calls getValue and the number inputted gets returned as a value for num. 
+	
+	std::cout << "Double of " << num << " is " << 2 * num;
+	
+	return 0;
+}
+*/
+
+
+
+
+/*
+
+void printHi()
+{
+	std::cout << "Hi";
+}
+
+int main()
+{
+	printHi();
+	std::cout << printHi; //Compile error. cout needs a value so that it can print. But, printHi does not return a value.
+}
+
+*/
+
+
+
+
+ /*                                                //PARAMETERS AND ARGUMENTS
+
+A function parameter is a  VARIABLE used in the header of a function.Function parameters work almost identically 
+to variables defined inside the function, but with one difference : they are initialized with a value provided by
+the caller of the function.
+
+An argument is a VALUE that is passed from the caller to the function when a function call is made
+
+--------------------------------------------------------------------------------------------------------------------
+
+This function takes one integer PARAMETER named x
+The caller will supply the value of x
+void printValue(int x)
+{
+	std::cout << x  << '\n';
+}
+
+--------------------------------------------------------------------------------------------------------------------
+
+Parameters of the function are created as variables, and the value of each of the arguments is copied into the 
+matching parameter.
+
+
+// This function has two integer parameters, one named x, and one named y
+// The values of x and y are passed in by the caller
+void printValues(int x, int y)
+{
+	std::cout << x << '\n';
+	std::cout << y << '\n';
+}
+
+int main()
+{
+	printValues(6, 7); // This function call has two arguments, 6 and 7
+
+	return 0;
+}
+
+
+
+*/
+
+                                                        //PROGRAM LEARNT
+/*
+#include<iostream>
+
+int doubleNumber(int x)
+{
+	return 2 * x;
+}
+
+
+int main()
+{
+	std::cout << "Enter a number: ";
+
+	int num;
+
+	std::cin >> num;
+
+	std::cout <<"Double of "<< num << " is: " << doubleNumber(num) << '\n';
+
+	return 0;
+}
+*/
+//----------------------------------------------------------------------------------------------------------------------------
+
+
+
+                                                             //LOCAL SCOPE
+/*
+* lifetime is a runtime property, and scope is a compile-time property, so although we are talking about both in the same
+program, they are enforced at different points.
+
+
+#include <iostream>
+
+int add(int x, int y) // x and y are created and enter scope here
+{
+	// x and y are usable only within add()
+	return x + y;
+} // y and x go out of scope and are destroyed here
+
+int main()
+{
+	int a{ 5 }; // a is created, initialized, and enters scope here
+	int b{ 6 }; // b is created, initialized, and enters scope here
+
+	// a and b are usable only within main()
+
+	std::cout << add(a, b) << '\n'; // calls add(5, 6), where x=5 and y=6
+
+	return 0;
+} // b and a go out of scope and are destroyed here
+
+
+
+*/
+
+
+/*
+int add(int x, int y);         //This is a forward declaration . Notice the semicolon. Used to tell the compiler than a 
+function exists without defining the function.
+
+
+*/
+
+
+
+#include <iostream>
+#include "add.h" 
+
+int main()
+{
+	std::cout << "The sum of 3 and 4 is: " << add(3, 4) << '\n';
+	return 0;
+}
+		
+/*                                                      NAMING COLLISIONS
+Most naming collisions occur in two cases:
+
+Two (or more) identically named functions (or global variables) are introduced into separate files belonging to the same program. 
+This will result in a linker error, as shown above.
+
+Two (or more) identically named functions (or global variables) are introduced into the same file.
+This will result in a compiler error.
+---------------------------------------------------------------------------
+
+#include <iostream>
+
+using namespace std; // this is a using-directive that allows us to access names in the std namespace with no namespace prefix
+
+int main()
+{
+	cout << "Hello world!";
+	return 0;
+}
+
+
+a using-directive is not a good practice as it mitigates the use of introducing namespaces like std.
+
+braces indent the code, which defines the scope for similar identifiers without causing a naming error.
+
+
+#include <iostream> // imports the declaration of std::cout into the global scope
+
+void foo(int x) // foo is defined in the global scope, x is defined within scope of foo()
+{ // braces used to delineate nested scope region for function foo()
+	std::cout << x << '\n';
+} // x goes out of scope here
+
+int main()
+{ // braces used to delineate nested scope region for function main()
+	foo(5);
+
+	int x { 6 }; // x is defined within the scope of main()
+	std::cout << x << '\n';
+
+	return 0;
+} // x goes out of scope here
+// foo and main (and std::cout) go out of scope here (the end of the file)
+
+x in void and x in int are different as they have been indented by braces.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------*/
+
+
+/*                                                 PREPROCESSOR DIRECTIVES
+Preprocessor reads the whole code and removes comments and makes sure each statement is in a new line.
+
+It also looks for preprocessor directives. # commands. When #include is written, it includes the contents of whatever file written.
+
+#define is used to define macros of either Funtion type(mostly unused) or Object type. Object type can either substitute Text or 
+substitute nothing. When substituting text, it only replaces non-preprocessor commands.
+
+There are others such as #ifdef, #ifndef, #endif
+
+#include <iostream>
+
+#define PRINT_JOE
+
+int main()
+{
+#ifdef PRINT_JOE
+	std::cout << "Joe\n"; // will be compiled since PRINT_JOE is defined
+#endif
+
+#ifdef PRINT_BOB
+	std::cout << "Bob\n"; // will be excluded since PRINT_BOB is not defined
+#endif
+
+	return 0;
+}
+
+This is conditional compilation.
+
+There is also #if 0 and #endif. All the code within this is not complied. Can be used to comment out code.
+To re-enable the code u can type #if 1 instead.
+
+*/
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+/*                                                             HEADER FILES
+.h extension instead of .cpp. U can include header files #include "file name.h". It copies all the contents to the main file.
+
+Never include definitions inside a header file, only declarations. Multiple definitions violate the one-variable-one-definiton rule.
+
+avoid including .cpp files
+
+you can tell the compiler to search a directory by adding them in solution explorer >> properties >> VC++ directories >> include directories
+
+
+To maximize the chance that missing includes will be flagged by compiler, order your #includes as follows:
+
+The paired header file
+Other headers from your project
+3rd party library headers
+Standard library headers
+The headers for each grouping should be sorted alphabetically (unless the documentation for a 3rd party library instructs you to do otherwise).
+
+
+Duplicate variable/ function definitions lead to compile errors. Happens when u include a header file with another header file.
+
+
+			#ifndef SQUARE_H
+			#define SQUARE_H
+
+			int getSquareSides()
+			{
+				return 4;
+			}
+
+			#endif
+This is a header guard to avoid duplicate definitions. If square_h has been defined previously, it doesn't compile whatever is between the #ifndef and 
+the subsequent #endif and vice-versa.
+
+modern header guard is #pragma once. #pragma once is convenient but google advices their employees to use traditional header guards.
+
+
+
+
+*/
