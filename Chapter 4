@@ -1,0 +1,334 @@
+/*                                              DATA TYPES
+
+unsigned integers cause problems like overloading and undefined behaviour.
+
+the width of int is also not fixed on most devices. So fixed int types were introduced. These can be accessed through
+<cstdint> header.
+
+#include <cstdint> // for fast and least types
+#include <iostream>
+
+int main()
+{
+    std::cout << "least 8:  " << sizeof(std::int_least8_t) * 8 << " bits\n";
+    std::cout << "least 16: " << sizeof(std::int_least16_t) * 8 << " bits\n";
+    std::cout << "least 32: " << sizeof(std::int_least32_t) * 8 << " bits\n";
+    std::cout << '\n';
+    std::cout << "fast 8:  " << sizeof(std::int_fast8_t) * 8 << " bits\n";
+    std::cout << "fast 16: " << sizeof(std::int_fast16_t) * 8 << " bits\n";
+    std::cout << "fast 32: " << sizeof(std::int_fast32_t) * 8 << " bits\n";
+
+    return 0;
+}
+
+sizeof() outputs data in std::size_t format. It is an implementation-defined unsigned integer type. Use <cstdef> for
+accessing it.
+------------------------------------------------
+
+
+#include <iostream>
+
+int main()
+{
+    std::cout << 5.0 << '\n';
+    std::cout << 6.7f << '\n';
+    std::cout << 9876543.21 << '\n';
+
+    return 0;
+}
+
+5.0 is printed as 5. f suffix is used to specify that it is a floating point number. 6.7f prints 6.7
+
+cout has a default precision of 6 significant digits.
+
+std::setprecision() from <iomanip> can be used to set the precision.
+
+Floating point numbers have rounding errors. Like 0.1 cannot be exactly stored. 0.1 is represented by
+0.000110011001100.......... which is 0.10000000000000001.
+
+bool is initialised by bool{ true/ false/ !true/ !false/ 0/ 1 }. std::cin takes only 0 and 1 as bool inputs.
+std::cout<<std::boolalpha prints "true" or "false".
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+                                                   IF ELSE STATEMENTS
+
+#include <iostream>
+
+// returns true if x and y are equal, false otherwise
+bool isEqual(int x, int y)
+{
+    return x == y; // operator== returns true if x equals y, and false otherwise
+}
+
+int main()
+{
+    std::cout << "Enter an integer: ";
+    int x {};
+    std::cin >> x;
+
+    std::cout << "Enter another integer: ";
+    int y {};
+    std::cin >> y;
+
+    if (isEqual(x, y))
+        std::cout << x << " and " << y << " are equal\n";
+    else
+        std::cout << x << " and " << y << " are not equal\n";
+
+    return 0;
+}
+
+if condition executes if condition is "boolean true".
+
+
+
+You never need an if else statement of the form:
+
+if (condition)
+  return true;
+else
+  return false;
+
+u can instead write return (condition); directly . If condition is true it automatically evaluates to boolean true.
+
+-------------------------------------------------------------------------------------------------------------------------
+                                                   CHARACTERS
+
+#include <iostream>
+
+int main()
+{
+    std::cout << "Input a keyboard character: "; // assume the user enters "abcd" (without quotes)
+
+    char ch{};
+    std::cin >> ch; // ch = 'a', "bcd" is left queued.
+    std::cout << "You entered: " << ch << '\n';
+
+    // Note: The following cin doesn't ask the user for input, it grabs queued input!
+    std::cin >> ch; // ch = 'b', "cd" is left queued.
+    std::cout << "You entered: " << ch << '\n';
+
+    return 0;
+}
+ To read multiple characters, use string type.
+
+char is 1 byte in size. There are signed char (-128 to 127)or(0-255) and unsigned char(0-127)
+-------------------------------------------------------------------------------------------------------------------------
+
+
+                                                   ESCAPE SEQUENCES
+
+like \n and \t
+
+\' prints single quote
+\" prints double quote
+\\ prints backslash
+\v vertical tab
+...............etc
+
+--------------------------------------------------------------------------------------------------------------------------
+
+                                                  TYPE CONVERSIONS
+
+#include <iostream>
+
+void print(double x) // print takes a double parameter
+{
+    std::cout << x << '\n';
+}
+
+int main()
+{
+    int y { 5 };
+    print(y); // y is of type int
+
+    return 0;
+}
+
+The value held by int variable y (5) will be converted to double value 5.0, and then copied into parameter x.
+
+In the above example, the conversion does not change variable y from type int to double. Instead, the conversion 
+uses the value of y (5) as input to create a new double value (5.0). This double value is then passed to function print.
+
+int to double is safe while double to int may lead to dropping the fractional part.
+
+To explicitly convert a type use static cast. SYNTAX: static_cast <new_type> (expression). This won't generate 
+a warning message.
+
+
+#include<iostream>
+
+int main()
+{
+    std::cout << "Enter a single character: ";
+
+    char character{};
+    std::cin >> character;
+
+    std::cout << "You entered " << '\'' << character << '\'' << " which has ASCII value: " << static_cast<int>(character);
+
+    return 0;
+}
+*/
+//                                                  QUIZ QUESTION 1                       
+#if 0
+
+#include<iostream>
+
+double readNum()
+{
+    std::cout << "Enter a number: ";
+    double num{};
+    std::cin >> num;
+
+    return num;
+}
+
+double calc(double x, double y, char z)
+{
+    
+
+    if (z == '+')
+        return x + y;
+
+    else if (z == '-')
+        return x - y;
+
+    else if (z == '*')
+        return x * y;
+
+    else if (z == '/')
+        return x / y;
+
+}
+
+int main()
+{
+    double num1{ readNum() }, num2{ readNum() };
+ 
+    std::cout << "Enter an operator: ";
+    char oprt{};
+    std::cin >> oprt;
+
+    std::cout << num1 << " " << oprt << " " << num2 << " is: " << calc(num1, num2, oprt);
+
+    return 0;
+}
+#endif
+
+
+
+//                                              QUIZ QUESTION 2
+
+#include<iostream>
+
+double getHeight()
+{
+    std::cout << "Enter height of tower in metres: ";
+    double x;
+    std::cin >> x;
+    return x;
+}
+
+
+double calcFall(int x)
+{
+    return 9.8 * (x) * (x) / 2;
+}
+
+void calcHeight(int s, double h)
+{
+    std::cout << "At " << s << " seconds, the ball is at height: " << h - calcFall(s) << "\n";
+}
+
+void groundCheck(int s, double h)
+{
+    if ((h - calcFall(s)) <= 0)
+        std::cout << "At " << s << " seconds, the ball is on the ground";
+
+    else 
+        std::cout << "At " << s << " seconds, the ball is at height: " << h - calcFall(s);
+}
+
+int main()
+{
+    double height{ getHeight() };
+
+    calcHeight(0, height);
+    calcHeight(1, height);
+    calcHeight(2, height);
+    calcHeight(3, height);
+    calcHeight(4, height);
+
+    groundCheck(5, height);
+
+    return 0;
+
+
+}
+
+
+
+
+
+#include <iostream>
+
+// Gets tower height from user and returns it
+double getTowerHeight()
+{
+	std::cout << "Enter the height of the tower in meters: ";
+	double towerHeight{};
+	std::cin >> towerHeight;
+	return towerHeight;
+}
+
+// Returns the current ball height after "seconds" seconds
+double calculateBallHeight(double towerHeight, int seconds)
+{
+	double gravity { 9.8 };
+
+	// Using formula: s = (u * t) + (a * t^2) / 2
+	// here u (initial velocity) = 0, so (u * t) = 0
+	double fallDistance { gravity * (seconds * seconds) / 2.0 };
+	double ballHeight { towerHeight - fallDistance };
+
+	// If the ball would be under the ground, place it on the ground
+	if (ballHeight < 0.0)
+		return 0.0;
+
+	return ballHeight;
+}
+
+// Prints ball height above ground
+void printBallHeight(double ballHeight, int seconds)
+{
+	if (ballHeight > 0.0)
+		std::cout << "At " << seconds << " seconds, the ball is at height: " << ballHeight << " meters\n";
+	else
+		std::cout << "At " << seconds << " seconds, the ball is on the ground.\n";
+}
+
+// Calculates the current ball height and then prints it
+// This is a helper function to make it easier to do this
+void calculateAndPrintBallHeight(double towerHeight, int seconds)
+{
+	double ballHeight{ calculateBallHeight(towerHeight, seconds) };
+	printBallHeight(ballHeight, seconds);
+}
+
+int main()
+{
+	double towerHeight{ getTowerHeight() };
+
+	calculateAndPrintBallHeight(towerHeight, 0);
+	calculateAndPrintBallHeight(towerHeight, 1);
+	calculateAndPrintBallHeight(towerHeight, 2);
+	calculateAndPrintBallHeight(towerHeight, 3);
+	calculateAndPrintBallHeight(towerHeight, 4);
+	calculateAndPrintBallHeight(towerHeight, 5);
+
+	return 0;
+}
